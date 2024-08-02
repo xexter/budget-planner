@@ -49,22 +49,25 @@ const Budget = () => {
   useEffect(() => {
     localStorage.setItem("budget", JSON.stringify(state));
     setRemaining((prevRemaining) => prevRemaining + (state - initState));
-  }, [state]);
+  }, [state, initState]); // Include initState here
 
   function spentAmountSave() {
     let newSpent = parseInt(cost) + parseInt(spent);
     setSpent(newSpent);
   }
+
   function remainingAmountSave() {
     let newRemain = parseInt(remaining) - parseInt(cost);
     setRemaining(newRemain);
   }
+
   function spentAmountDel(deletedExpenseCost) {
     setSpent((prevSpent) => parseInt(prevSpent) - parseInt(deletedExpenseCost));
     setRemaining(
       (prevRemaining) => parseInt(prevRemaining) + parseInt(deletedExpenseCost)
     );
   }
+
   const handleReset = () => {
     dispatch({ type: "RESET" });
     setRemaining(state);
@@ -72,26 +75,26 @@ const Budget = () => {
 
   return (
     <>
-      <h1 class="mt-4 mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
-        <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
+      <h1 className="mt-4 mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+        <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
           My Budget Planner
         </span>
       </h1>
       <main>
         <div className="budget">
-          <p>Budget : ₹{state}</p>
-          <p>Remaining : ₹{remaining}</p>
-          <p>Spent so far : ₹{spent}</p>
+          <p>Budget: ₹{state}</p>
+          <p>Remaining: ₹{remaining}</p>
+          <p>Spent so far: ₹{spent}</p>
         </div>
         <div className="increasebtns">
-          <h2 class="text-4xl font-bold dark:text-white">
-            <mark class="px-2 text-white bg-blue-600 rounded dark:bg-blue-500">
-              Increase Budget :
+          <h2 className="text-4xl font-bold dark:text-white">
+            <mark className="px-2 text-white bg-blue-600 rounded dark:bg-blue-500">
+              Increase Budget:
             </mark>
           </h2>
           <button onClick={() => dispatch({ type: "ADD100" })}> + 100 </button>
           <button onClick={() => dispatch({ type: "ADD500" })}> + 500 </button>
-          <button onClick={() => dispatch({ type: "ADD1000" })}>+ 1000</button>
+          <button onClick={() => dispatch({ type: "ADD1000" })}> + 1000 </button>
           <button onClick={handleReset}> Reset </button>
         </div>
         <AddExpense
